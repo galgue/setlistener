@@ -1,12 +1,5 @@
 import { z } from "zod";
-
-export const ArtistSchema = z.object({
-  mbid: z.string(),
-  name: z.string(),
-  sortName: z.string(),
-  disambiguation: z.string().optional(),
-  url: z.string().optional(),
-});
+import { ArtistSchema } from "./Setlist.schemas";
 
 const SearchBandsResponseSchema = z.object({
   artist: z.array(ArtistSchema),
@@ -20,7 +13,7 @@ export const searchBands = async (searchTerm: string) => {
     `https://api.setlist.fm/rest/1.0/search/artists?artistName=${searchTerm}&p=1&sort=relevance`,
     {
       headers: {
-        "x-api-key": "Y9PcUcNe3JzHwBin5TTh1mVqkuc-VPTjIBgj",
+        "x-api-key": process.env.PLAYLISTS_API_KEY as string,
         Accept: "application/json",
       },
     }
