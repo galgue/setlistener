@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { getSetlist, searchBands } from "../setlistApi";
-import { getArtistSetlistsIds } from "../setlistApi";
+import {
+  getSetlist,
+  searchBands,
+  getArtistSetlistsIds,
+} from "../../setlistApi";
 
 export const artistsRouter = createTRPCRouter({
   search: publicProcedure
