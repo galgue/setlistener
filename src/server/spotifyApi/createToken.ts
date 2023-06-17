@@ -1,7 +1,5 @@
 import { SpotifyTokenSchema } from "./Spotify.schema";
 
-export let SPOTIFY_TOKEN: string;
-
 export const refreshSpotifyToken = async () => {
   const body = new URLSearchParams();
   body.append("grant_type", "client_credentials");
@@ -21,5 +19,5 @@ export const refreshSpotifyToken = async () => {
 
   const data = SpotifyTokenSchema.parse(await response.json());
 
-  SPOTIFY_TOKEN = data.access_token;
+  process.env.SPOTIFY_TOKEN = data.access_token;
 };
