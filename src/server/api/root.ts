@@ -1,6 +1,6 @@
-import { artistsRouter } from "~/server/api/routers/artists";
 import { createTRPCRouter } from "~/server/api/trpc";
-import "@total-typescript/ts-reset";
+import { artistsRouter } from "./routers/artists";
+import { spotifyRouter } from "./routers/spotify";
 
 /**
  * This is the primary router for your server.
@@ -9,6 +9,7 @@ import "@total-typescript/ts-reset";
  */
 export const appRouter = createTRPCRouter({
   artist: artistsRouter,
+  spotify: spotifyRouter,
 });
 
 // export type definition of API
