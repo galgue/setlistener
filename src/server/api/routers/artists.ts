@@ -8,9 +8,18 @@ import {
 
 export const artistsRouter = createTRPCRouter({
   search: publicProcedure
-    .input(z.object({ text: z.string() }))
+    .input(z.object({ text: z.string(), max: z.number().default(10) }))
     .query(async ({ input }) => {
-      return await searchBands(input.text);
+      const artists = (await searchBands(input.text)).artist;
+      const foundArtistNames = new Set<string>();
+
+      const filteredArtists = artists.filter((artist) => {
+        if (foundArtistNames.has(artist.name)) return false;
+        foundArtistNames.add(artist.name);
+        return true;
+      });
+
+      return filteredArtists.slice(0, input.max);
     }),
   tours: publicProcedure
     .input(z.object({ artistId: z.string() }))
