@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="flex h-screen items-center justify-center bg-indigo-800">
-          <div className="relative h-96 max-w-7xl rounded-lg bg-white p-8 opacity-50 shadow-md">
+          <div className="relative h-[35rem] w-96 rounded-lg bg-white p-8 shadow-md">
             {children}
           </div>
         </div>
