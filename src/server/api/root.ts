@@ -12,5 +12,7 @@ export const appRouter = createTRPCRouter({
   spotify: spotifyRouter,
 });
 
+export const apiCaller = appRouter.createCaller({});
+
 // export type definition of API
 export type AppRouter = typeof appRouter;
