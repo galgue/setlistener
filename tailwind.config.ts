@@ -9,6 +9,7 @@ export default {
           background: "#000000",
           header: "#232323",
           row: "#121212",
+          green: "#1DB954",
         },
       },
     },
