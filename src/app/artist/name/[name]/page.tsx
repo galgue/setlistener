@@ -1,7 +1,5 @@
-import Head from "next/head";
-import Link from "next/link";
 import { z } from "zod";
-import { apiCaller, appRouter } from "~/server/api/root";
+import { apiCaller } from "~/server/api/root";
 import { ArtistInfo } from "./ArtistItem";
 
 const ParamsSchema = z.object({
