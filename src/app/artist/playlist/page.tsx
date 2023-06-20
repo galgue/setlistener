@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { ArtistInfo } from "./ArtistInfo";
-import { SongsList } from "./SongsList";
+import { SpotifyPlaylist } from "./SpotifyPlaylist";
 
 const ParamsSchema = z.object({
   artistId: z.string(),
@@ -19,19 +18,23 @@ const SearchSettingsPage = ({ searchParams }: { searchParams: unknown }) => {
     return <></>;
   }
   return (
-    <div className="flex h-full flex-col bg-spotify-background p-1">
-      <div className="flex">
-        <ArtistInfo artistName={artistName} />
+    <div className="flex h-full flex-col text-white">
+      <div className="flex h-[10%] flex-row items-center justify-between">
+        <div>edit settings</div>
+        <div>main page</div>
       </div>
-      <div className="flex-1 overflow-scroll">
-        <SongsList
-          artistId={artistId}
-          artistName={artistName}
-          minOccurrences={minOccurrences}
-          top={top}
-          tour={tour}
-          withCovers={withCovers}
+      <div className="flex-10 h-[80%]">
+        <SpotifyPlaylist
+          {...{ artistId, top, tour, minOccurrences, withCovers, artistName }}
         />
+      </div>
+      <div className="flex h-[10%] flex-row items-center justify-center">
+        <button
+          type="button"
+          className="mb-2 mr-2 w-full rounded-lg bg-spotify-green px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 "
+        >
+          save playlist
+        </button>
       </div>
     </div>
   );
