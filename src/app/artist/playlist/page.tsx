@@ -20,8 +20,10 @@ const SearchSettingsPage = ({ searchParams }: { searchParams: unknown }) => {
   }
   return (
     <div className="flex h-full flex-col bg-spotify-background p-1">
-      <ArtistInfo artistName={artistName} />
-      <div className="h-full flex-1">
+      <div className="flex">
+        <ArtistInfo artistName={artistName} />
+      </div>
+      <div className="flex-1 overflow-scroll">
         <SongsList
           artistId={artistId}
           artistName={artistName}
