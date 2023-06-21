@@ -19,5 +19,14 @@ export const searchBands = async (searchTerm: string) => {
     }
   );
 
+  if (response.status === 404) {
+    return SearchBandsResponseSchema.parse({
+      artist: [],
+      total: 0,
+      page: 0,
+      itemsPerPage: 0,
+    });
+  }
+
   return SearchBandsResponseSchema.parse(await response.json());
 };
