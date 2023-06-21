@@ -35,9 +35,9 @@ export const SongLogo = ({ logo, songName, previewUrl }: SongLogoProps) => {
         />
       )}
       <div
-        className={`absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-50  text-3xl text-white 
+        className={`absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-50  text-3xl text-white
         ${isPlaying ? "opacity-100" : "opacity-0"}
-        transition-opacity ${isPlaying ? "" : "hover:opacity-100"}`}
+        transition-opacity ${isPlaying ? "" : "md:hover:opacity-100"}`}
       >
         {isPlaying ? "ⅠⅠ" : "▶"}
       </div>
