@@ -13,8 +13,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex h-screen items-center justify-center bg-indigo-800">
-          <div className="relative h-[35rem] w-96 rounded-lg bg-white p-8 shadow-md">
+        <div className="flex h-screen items-center justify-center bg-spotify-header">
+          <div className="relative h-[95vh] w-[95vw] rounded-lg bg-spotify-background p-4 shadow-md md:h-[35rem] md:w-96">
             {children}
           </div>
         </div>
