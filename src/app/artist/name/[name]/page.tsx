@@ -11,19 +11,26 @@ const Search = async ({ params }: { params: unknown }) => {
 
   const data = await apiCaller.artist.search({ text: name });
 
-  return (
-    <div className="h-full">
-      <h1>Select Artist</h1>
-      <div className="flex h-full flex-col gap-1 overflow-scroll">
-        {data.map((artist) => (
-          <ArtistInfo
-            key={artist.mbid}
-            artistId={artist.mbid}
-            artistName={artist.name}
-            description={artist.disambiguation}
-          />
-        ))}
+  if (data.length === 0) {
+    return (
+      <div className="flex h-full">
+        <h1 className="self-center text-center text-2xl text-white">
+          No results found for {name}
+        </h1>
       </div>
+    );
+  }
+
+  return (
+    <div className="flex w-full flex-col gap-3">
+      {data.map((artist) => (
+        <ArtistInfo
+          key={artist.mbid}
+          artistId={artist.mbid}
+          artistName={artist.name}
+          description={artist.disambiguation}
+        />
+      ))}
     </div>
   );
 };

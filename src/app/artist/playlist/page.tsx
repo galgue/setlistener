@@ -20,7 +20,7 @@ const SearchSettingsPage = ({ searchParams }: { searchParams: unknown }) => {
   return (
     <div className="flex h-full flex-col text-white">
       <div className="flex h-[10%] flex-row items-center justify-between">
-        <div>edit settings</div>
+        <div className="text-3xl font-bold">{"<"}</div>
         <div>main page</div>
       </div>
       <div className="flex-10 h-[80%]">
@@ -31,9 +31,9 @@ const SearchSettingsPage = ({ searchParams }: { searchParams: unknown }) => {
       <div className="flex h-[10%] flex-row items-center justify-center">
         <button
           type="button"
-          className="mb-2 mr-2 w-full rounded-lg bg-spotify-green px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 "
+          className=" h-5/6 w-full rounded-lg bg-spotify-green py-1 text-2xl font-medium text-white hover:bg-green-800 "
         >
-          save playlist
+          Save Playlist
         </button>
       </div>
     </div>

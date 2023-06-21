@@ -12,9 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="select-none">
         <div className="flex h-screen items-center justify-center bg-spotify-header">
-          <div className="relative h-[95vh] w-[95vw] rounded-lg bg-spotify-background p-4 shadow-md md:h-[35rem] md:w-96">
+          <div className="relative h-[95vh] w-[95vw] rounded-lg bg-spotify-background px-8 py-4 shadow-md md:h-[35rem] md:w-96">
             {children}
           </div>
         </div>

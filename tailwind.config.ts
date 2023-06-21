@@ -12,6 +12,9 @@ export default {
           green: "#1DB954",
         },
       },
+      transitionProperty: {
+        height: "height",
+      },
     },
   },
   plugins: [],

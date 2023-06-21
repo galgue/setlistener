@@ -27,7 +27,7 @@ export const ArtistInfo = async ({
         },
       }}
     >
-      <div className="flex h-16 flex-row items-center rounded-lg bg-spotify-row p-1 text-white">
+      <div className="flex h-16 flex-row items-center rounded-lg bg-spotify-row px-3 py-1 text-white">
         <div className="mr-auto flex flex-col">
           <h1 className=" font-semibold">{artistName}</h1>
           <p className="text-sm">{description}</p>

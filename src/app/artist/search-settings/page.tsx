@@ -17,10 +17,9 @@ const SearchSettingsPage = async ({
   const tours = await apiCaller.artist.tours({ artistId });
 
   return (
-    <>
-      <h1>Search Settings</h1>
+    <div className="h-full w-full">
       <Options artistId={artistId} tours={tours} artistName={artistName} />
-    </>
+    </div>
   );
 };
 
