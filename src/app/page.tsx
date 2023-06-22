@@ -36,7 +36,7 @@ const Home = () => {
         />
       </div>
       <button
-        className="rounded-lg border-0 bg-spotify-green px-8 py-2 text-5xl text-white hover:bg-green-600 focus:outline-none disabled:opacity-50"
+        className="mb-20 rounded-lg border-0 bg-spotify-green px-8 py-2 text-5xl text-white hover:bg-green-600 focus:outline-none disabled:opacity-50"
         disabled={search.length === 0}
         onClick={() => {
           void router.push(`/artist/name/${encodeURIComponent(search)}`);
