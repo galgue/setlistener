@@ -1,9 +1,10 @@
 "use client";
-import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
   const [search, setSearch] = useState("");
+  const router = useRouter();
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
@@ -25,9 +26,7 @@ const Home = () => {
             if (e.key === "Enter") {
               e.preventDefault();
               e.stopPropagation();
-              window.location.href = `/artist/name/${encodeURIComponent(
-                search
-              )}`;
+              void router.push(`/artist/name/${encodeURIComponent(search)}`);
             }
           }}
           className="block w-10/12 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-center text-2xl text-gray-900 "
@@ -36,18 +35,15 @@ const Home = () => {
           }}
         />
       </div>
-      <Link
-        className="mb-10 flex flex-1 flex-col items-center justify-center"
-        href="artist/name/[name]"
-        as={`/artist/name/${encodeURIComponent(search)}`}
+      <button
+        className="rounded-lg border-0 bg-spotify-green px-8 py-2 text-5xl text-white hover:bg-green-600 focus:outline-none disabled:opacity-50"
+        disabled={search.length === 0}
+        onClick={() => {
+          void router.push(`/artist/name/${encodeURIComponent(search)}`);
+        }}
       >
-        <button
-          className="rounded-lg border-0 bg-spotify-green px-8 py-2 text-5xl text-white hover:bg-green-600 focus:outline-none disabled:opacity-50"
-          disabled={search.length === 0}
-        >
-          Search
-        </button>
-      </Link>
+        Search
+      </button>
     </div>
   );
 };
