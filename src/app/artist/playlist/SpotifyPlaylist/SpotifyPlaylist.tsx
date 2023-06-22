@@ -18,11 +18,11 @@ export const SpotifyPlaylist = ({
   withCovers,
   artistName,
 }: SpotifyPlaylistProps) => (
-  <div className="flex h-full flex-col bg-spotify-background p-1">
+  <div className="flex h-full flex-col gap-1 bg-spotify-background">
     <div className="flex">
       <ArtistInfo artistName={artistName} />
     </div>
-    <div className="flex-1 overflow-scroll">
+    <div className="flex-1 overflow-scroll rounded-lg">
       <SongsList
         artistId={artistId}
         artistName={artistName}
