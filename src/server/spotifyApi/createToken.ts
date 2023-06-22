@@ -20,6 +20,7 @@ const createSpotifyToken = async () => {
   const data = SpotifyTokenSchema.parse(await response.json());
 
   process.env.SPOTIFY_TOKEN = data.access_token;
+  console.info("Spotify token refreshed");
 
   return {
     expiresIn: data.expires_in,
