@@ -1,6 +1,6 @@
 import { SpotifyTokenSchema } from "./Spotify.schema";
 
-export const refreshSpotifyToken = async () => {
+const createSpotifyToken = async () => {
   const body = new URLSearchParams();
   body.append("grant_type", "client_credentials");
   body.append("client_id", process.env.SPOTIFY_CLIENT_ID as string);
@@ -20,4 +20,20 @@ export const refreshSpotifyToken = async () => {
   const data = SpotifyTokenSchema.parse(await response.json());
 
   process.env.SPOTIFY_TOKEN = data.access_token;
+
+  return {
+    expiresIn: data.expires_in,
+  };
 };
+
+const refreshSpotifyToken = async () => {
+  while (true) {
+    const { expiresIn } = await createSpotifyToken();
+    await new Promise((resolve) =>
+      setTimeout(resolve, expiresIn * 1000 - 1000 * 60 * 5)
+    );
+  }
+};
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+refreshSpotifyToken();
