@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { useMemo } from "react";
 import { usePlayPreview } from "./usePlayPreview";
 

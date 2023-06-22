@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { useCallback, useEffect, useMemo } from "react";
 import { create } from "zustand";
 import { useVolume } from "./useVolume";
@@ -32,7 +31,7 @@ export const usePlayPreview = (preview: HTMLAudioElement) => {
   const handlePreview = useCallback(async () => {
     if (isPlaying) {
       preview.currentTime = 0;
-      preview.play();
+      void preview.play();
       await fadeIn();
     } else {
       if (state.playedPreview) {
@@ -45,7 +44,7 @@ export const usePlayPreview = (preview: HTMLAudioElement) => {
   }, [fadeIn, fadeOut, isPlaying, mute, preview, state.playedPreview]);
 
   useEffect(() => {
-    handlePreview();
+    void handlePreview();
   }, [handlePreview]);
 
   const playPreview = () => {
