@@ -14,7 +14,7 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
   const [tour, setTour] = useState<string>("");
   const [numberOfShows, setNumberOfShows] = useState<number>(5);
   const [maxOccurrences, setMaxOccurrences] = useState<number>(2);
-  const [withCovers, setWithCovers] = useState<boolean>(false);
+  const [withCovers, setWithCovers] = useState<boolean>(true);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -124,10 +124,9 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
             query: {
               artistId,
               artistName,
-              numberOfShows: isEditing ? numberOfShows : undefined,
-              maxOccurrences: isEditing ? maxOccurrences : undefined,
-              withCovers: isEditing ? withCovers : undefined,
-              tour: isEditing ? tour : undefined,
+              ...(isEditing
+                ? { numberOfShows, maxOccurrences, withCovers, tour }
+                : {}),
             },
           }}
         >

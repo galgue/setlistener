@@ -45,7 +45,7 @@ export const artistsRouter = createTRPCRouter({
         withCovers: z
           .string()
           .transform((value) => value === "true")
-          .default("false"),
+          .default("true"),
       })
     )
     .query(async ({ input }) => {
