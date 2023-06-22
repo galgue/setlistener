@@ -17,6 +17,9 @@ export const getArtistInfo = async (artistName: string) => {
   const response = await fetch(
     `https://api.spotify.com/v1/search?q=${artistNameEncoded}&type=artist&limit=1&offset=0`,
     {
+      next: {
+        revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
+      },
       headers: {
         Authorization: `Bearer ${process.env.SPOTIFY_TOKEN as string}`,
       },

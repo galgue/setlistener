@@ -12,6 +12,9 @@ export const searchBands = async (searchTerm: string) => {
   const response = await fetch(
     `https://api.setlist.fm/rest/1.0/search/artists?artistName=${searchTerm}&p=1&sort=relevance`,
     {
+      next: {
+        revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
+      },
       headers: {
         "x-api-key": process.env.PLAYLISTS_API_KEY as string,
         Accept: "application/json",

@@ -18,6 +18,9 @@ export const getArtistSetlistsIds = async (
       tour ?? ""
     }`,
     {
+      next: {
+        revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
+      },
       headers: {
         "x-api-key": process.env.PLAYLISTS_API_KEY as string,
         Accept: "application/json",
