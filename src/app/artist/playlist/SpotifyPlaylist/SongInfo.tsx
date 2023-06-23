@@ -32,7 +32,7 @@ export const SongInfo = async ({ artist, songName }: SongInfoProps) => {
             ({msToTime(song.duration_ms)})
           </div>
         </div>
-        <div className="line-clamp-1 overflow-hidden font-thin text-[#A0A0A0]">
+        <div className="line-clamp-1 w-60 overflow-hidden font-thin text-[#A0A0A0]">
           {song.album.name}
         </div>
       </div>
