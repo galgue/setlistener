@@ -1,34 +1,7 @@
 import { z } from "zod";
+import { SpotifyArtistSchema } from "./SpotifyArtist.schema";
 
-export const SpotifyTokenSchema = z.object({
-  access_token: z.string(),
-  token_type: z.string(),
-  expires_in: z.number(),
-});
-
-export const SpotifyArtistSchema = z.object({
-  external_urls: z.object({
-    spotify: z.string(),
-  }),
-  genres: z.array(z.string()).optional(),
-  href: z.string(),
-  id: z.string(),
-  images: z
-    .array(
-      z.object({
-        height: z.number(),
-        url: z.string(),
-        width: z.number(),
-      })
-    )
-    .optional(),
-  name: z.string(),
-  popularity: z.number().optional(),
-  type: z.string(),
-  uri: z.string(),
-});
-
-export const SongSchema = z.object({
+export const SpotifySongSchema = z.object({
   album: z.object({
     album_type: z.string(),
     external_urls: z.object({
@@ -69,5 +42,3 @@ export const SongSchema = z.object({
   type: z.string(),
   uri: z.string(),
 });
-
-export type SpotifySong = z.infer<typeof SongSchema>;

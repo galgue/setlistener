@@ -1,4 +1,4 @@
-import { SpotifyTokenSchema } from "./Spotify.schema";
+import { SpotifyTokenSchema } from "./schemas";
 
 const createSpotifyToken = async () => {
   try {
@@ -21,7 +21,7 @@ const createSpotifyToken = async () => {
     const data = SpotifyTokenSchema.parse(await response.json());
 
     process.env.SPOTIFY_TOKEN = data.access_token;
-    console.info("Spotify token refreshed");
+    console.info("Spotify token refreshed", new Date().toISOString());
 
     return {
       expiresIn: data.expires_in,
@@ -43,5 +43,4 @@ const refreshSpotifyToken = async () => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-refreshSpotifyToken();
+void refreshSpotifyToken();

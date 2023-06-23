@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SpotifyArtistSchema } from "./Spotify.schema";
+import { SpotifyArtistSchema } from "./schemas";
 
 const GetArtistInfoResponseSchema = z.object({
   artists: z.object({

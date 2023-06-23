@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { SongSchema } from "./Spotify.schema";
+import { SpotifySongSchema } from "./schemas";
 
 const GetSongResponseSchema = z.object({
   tracks: z.object({
     href: z.string(),
-    items: z.array(SongSchema),
+    items: z.array(SpotifySongSchema),
     limit: z.number(),
     previous: z.null(),
     total: z.number(),
