@@ -14,7 +14,9 @@ type SongLogoProps = {
 };
 
 export const SongLogo = ({ logo, songName, previewUrl }: SongLogoProps) => {
-  const { isPlaying, onPlayClick } = usePreview(previewUrl || "");
+  const { isPlaying, onPlayClick, havePreview } = usePreview(
+    previewUrl ?? undefined
+  );
 
   return (
     <div
@@ -34,13 +36,15 @@ export const SongLogo = ({ logo, songName, previewUrl }: SongLogoProps) => {
           className="h-full w-full"
         />
       )}
-      <div
-        className={`absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-50  text-3xl text-white
+      {havePreview && (
+        <div
+          className={`absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-50  text-3xl text-white
         ${isPlaying ? "opacity-100" : "opacity-0"}
         transition-opacity ${isPlaying ? "" : "md:hover:opacity-100"}`}
-      >
-        {isPlaying ? "ⅠⅠ" : "▶"}
-      </div>
+        >
+          {isPlaying ? "ⅠⅠ" : "▶"}
+        </div>
+      )}
     </div>
   );
 };
