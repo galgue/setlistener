@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { SpotifySongSchema } from "./schemas";
+import { getSpotifyToken } from "./createToken";
 
 const GetSongResponseSchema = z.object({
   tracks: z.object({
@@ -22,7 +23,7 @@ export const getSong = async (songName: string, artists: string) => {
         revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
       },
       headers: {
-        Authorization: `Bearer ${process.env.SPOTIFY_TOKEN as string}`,
+        Authorization: `Bearer ${await getSpotifyToken()}`,
       },
     }
   );
