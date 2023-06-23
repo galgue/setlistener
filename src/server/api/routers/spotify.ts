@@ -1,6 +1,7 @@
 import { getArtistInfo, getSong } from "~/server/spotifyApi";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { z } from "zod";
+import type { SpotifySong } from "~/server/spotifyApi/schemas";
 
 export const spotifyRouter = createTRPCRouter({
   getArtistInfo: publicProcedure
@@ -65,6 +66,6 @@ export const spotifyRouter = createTRPCRouter({
       return {
         ...song,
         bannerImage: smallestImage,
-      };
+      } as SpotifySong;
     }),
 });
