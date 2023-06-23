@@ -1,27 +1,11 @@
-import { apiCaller } from "~/server/api/root";
+import type { SpotifySong } from "~/server/spotifyApi/schemas";
 import { SongLogo } from "./SongLogo";
 
 type SongInfoProps = {
-  songName: string;
-  artist: string;
-  coverArtist?: string;
+  song: SpotifySong;
 };
 
-export const SongInfo = async ({
-  artist,
-  songName,
-  coverArtist,
-}: SongInfoProps) => {
-  const song = await apiCaller.spotify.getSong({
-    artist,
-    songName,
-    coverArtist,
-  });
-
-  if (!song) {
-    return <></>;
-  }
-
+export const SongInfo = ({ song }: SongInfoProps) => {
   return (
     <div className="flex h-16 w-full flex-row items-center gap-2 bg-spotify-row pl-2">
       <SongLogo

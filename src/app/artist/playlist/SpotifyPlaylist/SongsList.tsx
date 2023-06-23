@@ -1,5 +1,7 @@
 import { apiCaller } from "~/server/api/root";
 import { SongInfo } from "./SongInfo";
+import { PlaylistData } from "../PlaylistData";
+import type { SpotifySong } from "~/server/spotifyApi/schemas";
 
 type SongsListProps = {
   artistId: string;
@@ -26,16 +28,26 @@ export const SongsList = async ({
     withCovers,
   });
 
+  const SongsInfo = (
+    await Promise.all(
+      songs.map(({ cover, name }) => {
+        return apiCaller.spotify.getSong({
+          artist: artistName,
+          songName: name,
+          coverArtist: cover,
+        });
+      })
+    )
+  ).filter((song) => song !== undefined) as SpotifySong[];
+
   return (
-    <div className="h-full w-full overflow-scroll">
-      {songs.map((song) => (
-        <SongInfo
-          key={`${song.name}-${artistName}`}
-          artist={artistName}
-          songName={song.name}
-          coverArtist={song.cover}
-        />
-      ))}
-    </div>
+    <>
+      <PlaylistData data={SongsInfo} />
+      <div className="h-full w-full overflow-scroll">
+        {SongsInfo.map((song) => (
+          <SongInfo key={`${song.name}-${artistName}`} song={song} />
+        ))}
+      </div>
+    </>
   );
 };
