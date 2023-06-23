@@ -24,7 +24,13 @@ export const artistsRouter = createTRPCRouter({
   tours: publicProcedure
     .input(z.object({ artistId: z.string() }))
     .query(async ({ input }) => {
-      const playlists = await getArtistSetlistsIds(input.artistId, 1);
+      const playlists = (
+        await Promise.all([
+          getArtistSetlistsIds(input.artistId, 1),
+          getArtistSetlistsIds(input.artistId, 2),
+          getArtistSetlistsIds(input.artistId, 3),
+        ])
+      ).flat();
 
       const tours = playlists
         .filter((playlist) => Boolean(playlist.tour?.name))
@@ -51,7 +57,17 @@ export const artistsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const { artistId, top, withCovers, minOccurrences, tour } = input;
 
-      const playlistsWithIds = await getArtistSetlistsIds(artistId, 1, tour);
+      const lastResult = await getArtistSetlistsIds(artistId, 1, tour);
+
+      const playlistsWithIds = [...lastResult];
+
+      let page = 2;
+
+      while (lastResult.length !== 0 && playlistsWithIds.length < top) {
+        const newPlaylists = await getArtistSetlistsIds(artistId, page, tour);
+        playlistsWithIds.push(...newPlaylists);
+        page++;
+      }
 
       const pastPlaylists = playlistsWithIds.filter(
         (playlist) => playlist.eventDate < new Date()
@@ -97,7 +113,12 @@ export const artistsRouter = createTRPCRouter({
 
       const relevantSongs = Object.values(Array.from(songsOccurrences))
         .filter(([_, options]) => {
-          return options.occurrences > (minOccurrences || top - 2);
+          return (
+            options.occurrences >=
+            (top > playlistIds.length
+              ? Math.max(0, playlistIds.length - 2)
+              : minOccurrences || top - 2)
+          );
         })
         .map(([song, options]) => ({
           name: song,
