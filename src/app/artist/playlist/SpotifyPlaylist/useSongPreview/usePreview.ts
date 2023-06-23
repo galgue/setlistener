@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 import { usePlayPreview } from "./usePlayPreview";
 
-export const usePreview = (previewUrl: string) => {
-  const audio = useMemo(() => new Audio(previewUrl), [previewUrl]);
+export const usePreview = (previewUrl?: string) => {
+  const audio = useMemo(
+    () => (previewUrl ? new Audio(previewUrl) : undefined),
+    [previewUrl]
+  );
 
   const { isPlaying, playPreview, stopPreview } = usePlayPreview(audio);
 
@@ -17,5 +20,6 @@ export const usePreview = (previewUrl: string) => {
   return {
     isPlaying,
     onPlayClick,
+    havePreview: Boolean(previewUrl),
   };
 };

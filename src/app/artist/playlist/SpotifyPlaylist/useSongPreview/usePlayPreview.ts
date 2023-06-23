@@ -19,7 +19,7 @@ const usePlayedPreviewState = create<State>((set) => {
   };
 });
 
-export const usePlayPreview = (preview: HTMLAudioElement) => {
+export const usePlayPreview = (preview?: HTMLAudioElement) => {
   const state = usePlayedPreviewState();
 
   const { fadeIn, fadeOut, mute } = useVolume(preview);
@@ -29,6 +29,7 @@ export const usePlayPreview = (preview: HTMLAudioElement) => {
   }, [preview, state.playedPreview]);
 
   const handlePreview = useCallback(async () => {
+    if (!preview) return;
     if (isPlaying) {
       preview.currentTime = 0;
       void preview.play();
@@ -48,6 +49,7 @@ export const usePlayPreview = (preview: HTMLAudioElement) => {
   }, [handlePreview]);
 
   const playPreview = () => {
+    if (!preview) return;
     state.playPreview(preview);
   };
 
@@ -56,6 +58,7 @@ export const usePlayPreview = (preview: HTMLAudioElement) => {
   };
 
   useEffect(() => {
+    if (!preview) return;
     preview.addEventListener("ended", () => preview.pause());
     return () => {
       preview.removeEventListener("ended", () => preview.pause());
