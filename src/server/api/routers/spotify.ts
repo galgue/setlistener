@@ -29,17 +29,28 @@ export const spotifyRouter = createTRPCRouter({
       z.object({
         songName: z.string(),
         artist: z.string(),
+        coverArtist: z.string().optional(),
       })
     )
     .query(async ({ input }) => {
-      const { songName, artist } = input;
+      const { songName, artist, coverArtist } = input;
       const response = await getSong(songName, artist);
 
-      const song = response.tracks.items.find((song) => {
+      let song = response.tracks.items.find((song) => {
         if (song.artists[0]?.name.toLowerCase() === artist.toLowerCase()) {
           return song;
         }
       });
+
+      if (!song && coverArtist) {
+        song = response.tracks.items.find((song) => {
+          if (
+            song.artists[0]?.name.toLowerCase() === coverArtist.toLowerCase()
+          ) {
+            return song;
+          }
+        });
+      }
 
       if (!song) {
         return undefined;

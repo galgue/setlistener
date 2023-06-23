@@ -30,9 +30,10 @@ export const SongsList = async ({
     <div className="h-full w-full overflow-scroll">
       {songs.map((song) => (
         <SongInfo
-          key={`${song.name}-${song.cover ?? artistName}`}
-          artist={song.cover ?? artistName}
+          key={`${song.name}-${artistName}`}
+          artist={artistName}
           songName={song.name}
+          coverArtist={song.cover}
         />
       ))}
     </div>

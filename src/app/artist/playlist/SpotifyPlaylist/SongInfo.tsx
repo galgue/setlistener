@@ -4,12 +4,18 @@ import { SongLogo } from "./SongLogo";
 type SongInfoProps = {
   songName: string;
   artist: string;
+  coverArtist?: string;
 };
 
-export const SongInfo = async ({ artist, songName }: SongInfoProps) => {
+export const SongInfo = async ({
+  artist,
+  songName,
+  coverArtist,
+}: SongInfoProps) => {
   const song = await apiCaller.spotify.getSong({
     artist,
     songName,
+    coverArtist,
   });
 
   if (!song) {
