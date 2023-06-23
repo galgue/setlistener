@@ -42,3 +42,11 @@ export const SpotifySongSchema = z.object({
   type: z.string(),
   uri: z.string(),
 });
+
+export type SpotifySong = z.infer<typeof SpotifySongSchema> & {
+  bannerImage: {
+    height: number;
+    url: string;
+    width: number;
+  };
+};
