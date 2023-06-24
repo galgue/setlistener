@@ -1,7 +1,7 @@
 import { apiCaller } from "~/server/api/root";
 import { SongInfo } from "./SongInfo";
-import { PlaylistData } from "../PlaylistData";
 import type { SpotifySong } from "~/server/spotifyApi/schemas";
+import { PlaylistDataAtom } from "~/app/stores/current-playlist";
 
 type SongsListProps = {
   artistId: string;
@@ -42,7 +42,7 @@ export const SongsList = async ({
 
   return (
     <>
-      <PlaylistData data={SongsInfo} />
+      <PlaylistDataAtom data={SongsInfo} />
       <div className="h-full w-full overflow-scroll">
         {SongsInfo.map((song) => (
           <SongInfo key={`${song.name}-${artistName}`} song={song} />
