@@ -79,6 +79,7 @@ export const artistsRouter = createTRPCRouter({
 
       const playlists: Awaited<ReturnType<typeof getSetlist>>[] = [];
 
+      // request can't be parallelized because of rate limiting
       for (const playlistId of playlistIds) {
         const playlist = await getSetlist(playlistId);
         playlists.push(playlist);
