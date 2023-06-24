@@ -2,6 +2,7 @@ import { getArtistInfo, getSong } from "~/server/spotifyApi";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { z } from "zod";
 import type { SpotifySong } from "~/server/spotifyApi/schemas";
+import { getUserProfile } from "~/server/spotifyApi/getUserProfile";
 
 export const spotifyRouter = createTRPCRouter({
   getArtistInfo: publicProcedure
@@ -67,5 +68,15 @@ export const spotifyRouter = createTRPCRouter({
         ...song,
         bannerImage: smallestImage,
       } as SpotifySong;
+    }),
+  getUserProfile: publicProcedure
+    .input(
+      z.object({
+        accessToken: z.string(),
+        tokenType: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      return getUserProfile(input.tokenType, input.accessToken);
     }),
 });
