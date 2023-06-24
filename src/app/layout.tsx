@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
 import { ClientProvider } from "~/utils/trpcClient";
+import { LoggedSpotifyUser } from "./stores/logged-spotify-user";
 
 export const metadata = {
   title: "Next.js",
@@ -13,6 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <ClientProvider>
+      <LoggedSpotifyUser />
       <html lang="en">
         <body className="select-none">
           <div className="flex h-screen items-center justify-center bg-spotify-header pb-10 md:pb-0">
