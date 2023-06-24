@@ -77,11 +77,12 @@ export const artistsRouter = createTRPCRouter({
         .map((playlist) => playlist.id)
         .slice(0, top);
 
-      const playlists = await Promise.all(
-        playlistIds.map(async (playlist) => {
-          return await getSetlist(playlist);
-        })
-      );
+      const playlists: Awaited<ReturnType<typeof getSetlist>>[] = [];
+
+      for (const playlistId of playlistIds) {
+        const playlist = await getSetlist(playlistId);
+        playlists.push(playlist);
+      }
 
       const songsOccurrences = playlists.reduce(
         (acc, playlist) => {
