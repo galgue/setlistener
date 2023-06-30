@@ -12,12 +12,19 @@ export const setlistFetcher = async (
 ) => {
   await limiter.removeTokens(1);
 
-  return await fetch(input, {
+  const fetchResponse = await fetch(input, {
     ...init,
     headers: {
       "x-api-key": process.env.PLAYLISTS_API_KEY,
       Accept: "application/json",
       ...init?.headers,
     },
+    next: {
+      tags: ["setlist"],
+      revalidate: process.env.NODE_ENV === "development" ? 0 : 60 * 60 * 24,
+      ...init?.next,
+    },
   });
+
+  return fetchResponse;
 };
