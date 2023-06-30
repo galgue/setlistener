@@ -92,7 +92,7 @@ export const useSpotifyConnect = () => {
     } else {
       deleteCookie(SPOTIFY_TOKEN);
     }
-  }, [saveAuth]);
+  }, []);
 
   return {
     connectToSpotify,

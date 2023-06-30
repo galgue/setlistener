@@ -1,8 +1,6 @@
 import { z } from "zod";
-import { SpotifyPlaylist } from "./SpotifyPlaylist";
 import { LoginButton } from "./LoginButton";
-import Link from "next/link";
-import { PreviousPageButton } from "~/components/PreviousPageButton";
+import { SpotifyPlaylist } from "./SpotifyPlaylist";
 
 const ParamsSchema = z.object({
   artistId: z.string(),

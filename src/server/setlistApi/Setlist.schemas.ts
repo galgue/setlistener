@@ -25,7 +25,7 @@ export const CitySchema = z.object({
 
 export const VenueSchema = z.object({
   id: z.string(),
-  name: z.string(),
+  name: z.string().optional(),
   city: CitySchema,
 });
 
@@ -49,7 +49,7 @@ export const SetlistSchema = z.object({
   eventDate: z.string().transform((date) => new Date(date)),
   lastUpdated: z.coerce.date(),
   artist: ArtistSchema,
-  venue: VenueSchema,
+  venue: VenueSchema.optional(),
   tour: TourSchema.optional(),
   sets: z.object({
     set: z.array(SetSchema),

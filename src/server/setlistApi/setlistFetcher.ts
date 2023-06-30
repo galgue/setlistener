@@ -20,7 +20,6 @@ export const setlistFetcher = async (
       ...init?.headers,
     },
     next: {
-      tags: ["setlist"],
       revalidate: process.env.NODE_ENV === "development" ? 0 : 60 * 60 * 24,
       ...init?.next,
     },
