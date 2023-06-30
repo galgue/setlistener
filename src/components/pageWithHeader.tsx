@@ -12,7 +12,7 @@ export const PageWithHeader = async ({
   const session = await getUserServerSession();
   return (
     <div className="flex h-full flex-col items-center justify-center">
-      <div className="grid w-full grid-cols-[15%_auto_15%]">
+      <div className="grid min-h-[72px] w-full grid-cols-[15%_auto_15%]">
         <PreviousPageButton
           type="button"
           className="my-auto mr-auto h-10 w-10 rounded-lg bg-spotify-header py-1 text-center text-2xl font-bold text-white hover:bg-green-800"
