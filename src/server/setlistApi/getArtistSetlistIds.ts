@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { SetlistSchema } from "./Setlist.schemas";
+import { setlistFetcher } from "./setlistFetcher";
 
 const GetArtistSetlistResultSchema = z.object({
   itemsPerPage: z.number(),
@@ -13,17 +14,13 @@ export const getArtistSetlistsIds = async (
   page: number,
   tour?: string
 ) => {
-  const response = await fetch(
+  const response = await setlistFetcher(
     `https://api.setlist.fm/rest/1.0/artist/${artistId}/setlists?p=${page}&tourName=${
       tour ?? ""
     }`,
     {
       next: {
         revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
-      },
-      headers: {
-        "x-api-key": process.env.PLAYLISTS_API_KEY as string,
-        Accept: "application/json",
       },
     }
   );
