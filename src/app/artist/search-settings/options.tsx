@@ -97,7 +97,7 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
               setIsEditing(!isEditing);
             }}
             type="button"
-            className="å flex w-full items-center justify-between rounded-xl border border-gray-200 px-3 py-2 text-left font-medium text-gray-500  focus:ring-gray-200"
+            className="flex w-full items-center justify-between rounded-xl border border-gray-200 px-3 py-2 text-left font-medium text-gray-500  focus:ring-gray-200"
           >
             <span>edit options</span>
             <svg
