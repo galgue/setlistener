@@ -9,6 +9,7 @@ export const ServerSchema = {
   SPOTIFY_CLIENT_ID: z.string(),
   SPOTIFY_CLIENT_SECRET: z.string(),
   AUTH_SECRET: z.string(),
+  NEXTAUTH_URL: z.string().optional(),
 };
 
 /** @typedef {typeof ClientSchema} ClientSchema */
@@ -40,6 +41,7 @@ export const env = createEnv({
     SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
     SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
     AUTH_SECRET: process.env.AUTH_SECRET,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
