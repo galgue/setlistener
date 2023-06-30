@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ArtistSchema } from "./Setlist.schemas";
+import { setlistFetcher } from "./setlistFetcher";
 
 const SearchBandsResponseSchema = z.object({
   artist: z.array(ArtistSchema),
@@ -9,17 +10,8 @@ const SearchBandsResponseSchema = z.object({
 });
 
 export const searchBands = async (searchTerm: string) => {
-  const response = await fetch(
-    `https://api.setlist.fm/rest/1.0/search/artists?artistName=${searchTerm}&p=1&sort=relevance`,
-    {
-      next: {
-        revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
-      },
-      headers: {
-        "x-api-key": process.env.PLAYLISTS_API_KEY as string,
-        Accept: "application/json",
-      },
-    }
+  const response = await setlistFetcher(
+    `https://api.setlist.fm/rest/1.0/search/artists?artistName=${searchTerm}&p=1&sort=relevance`
   );
 
   if (response.status === 404) {

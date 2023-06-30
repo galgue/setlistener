@@ -15,14 +15,6 @@ export async function GET(req: NextRequest) {
     throw new Error("Missing code");
   }
 
-  if (!process.env.SPOTIFY_CLIENT_ID) {
-    throw new Error("Missing SPOTIFY_CLIENT_ID");
-  }
-
-  if (!process.env.SPOTIFY_CLIENT_SECRET) {
-    throw new Error("Missing SPOTIFY_CLIENT_SECRET");
-  }
-
   const res = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
     body: new URLSearchParams({
