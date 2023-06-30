@@ -11,7 +11,7 @@ export function GET(req: NextRequest) {
   const redirect: RedirectFetchResponse = {
     redirectUrl: "https://accounts.spotify.com/authorize",
     searchParams: {
-      client_id: process.env.SPOTIFY_CLIENT_ID as string,
+      client_id: process.env.SPOTIFY_CLIENT_ID,
       response_type: "code",
       redirect_uri: redirectUrl,
     },
