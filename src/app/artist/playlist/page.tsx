@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { LoginButton } from "./LoginButton";
 import { SpotifyPlaylist } from "./SpotifyPlaylist";
 
 const ParamsSchema = z.object({
@@ -26,9 +25,7 @@ const SearchSettingsPage = ({ searchParams }: { searchParams: unknown }) => {
           {...{ artistId, top, tour, minOccurrences, withCovers, artistName }}
         />
       </div>
-      <div className="flex h-[15%] flex-row items-center justify-center">
-        <LoginButton />
-      </div>
+      <div className="flex h-[15%] flex-row items-center justify-center"></div>
     </div>
   );
 };

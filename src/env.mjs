@@ -8,6 +8,7 @@ export const ServerSchema = {
   PLAYLISTS_API_KEY: z.string(),
   SPOTIFY_CLIENT_ID: z.string(),
   SPOTIFY_CLIENT_SECRET: z.string(),
+  AUTH_SECRET: z.string(),
 };
 
 /** @typedef {typeof ClientSchema} ClientSchema */
@@ -38,6 +39,7 @@ export const env = createEnv({
     PLAYLISTS_API_KEY: process.env.PLAYLISTS_API_KEY,
     SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
     SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
+    AUTH_SECRET: process.env.AUTH_SECRET,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

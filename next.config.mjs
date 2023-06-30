@@ -19,7 +19,7 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["i.scdn.co"],
+    domains: ["i.scdn.co", "platform-lookaside.fbsbx.com"],
   },
 };
 export default config;
