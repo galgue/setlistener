@@ -11,12 +11,7 @@ const SearchBandsResponseSchema = z.object({
 
 export const searchBands = async (searchTerm: string) => {
   const response = await setlistFetcher(
-    `https://api.setlist.fm/rest/1.0/search/artists?artistName=${searchTerm}&p=1&sort=relevance`,
-    {
-      next: {
-        revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
-      },
-    }
+    `https://api.setlist.fm/rest/1.0/search/artists?artistName=${searchTerm}&p=1&sort=relevance`
   );
 
   if (response.status === 404) {

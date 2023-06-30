@@ -17,12 +17,7 @@ export const getArtistSetlistsIds = async (
   const response = await setlistFetcher(
     `https://api.setlist.fm/rest/1.0/artist/${artistId}/setlists?p=${page}&tourName=${
       tour ?? ""
-    }`,
-    {
-      next: {
-        revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
-      },
-    }
+    }`
   );
 
   const setlistResult = GetArtistSetlistResultSchema.parse(

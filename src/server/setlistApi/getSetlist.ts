@@ -5,12 +5,7 @@ export const getSetlist = async (id: string) => {
   let retries = 0;
   while (retries < 3) {
     const response = await setlistFetcher(
-      `https://api.setlist.fm/rest/1.0/setlist/${id}`,
-      {
-        next: {
-          revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
-        },
-      }
+      `https://api.setlist.fm/rest/1.0/setlist/${id}`
     );
     const setlistResponse = SetlistSchema.safeParse(await response.json());
 
