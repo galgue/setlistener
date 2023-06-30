@@ -1,1 +1,0 @@
-export { LoggedSpotifyUser } from "./LoggedSpotifyUser";
