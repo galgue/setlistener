@@ -1,5 +1,19 @@
 import { createEnv } from "@t3-oss/env-nextjs";
-import { ClientSchema, ServerSchema } from "env";
+// import { ClientSchema, ServerSchema } from "../env.js";
+import { z } from "zod";
+
+/** @typedef {typeof ServerSchema} ServerSchema */
+export const ServerSchema = {
+  NODE_ENV: z.enum(["development", "test", "production"]),
+  PLAYLISTS_API_KEY: z.string(),
+  SPOTIFY_CLIENT_ID: z.string(),
+  SPOTIFY_CLIENT_SECRET: z.string(),
+};
+
+/** @typedef {typeof ClientSchema} ClientSchema */
+export const ClientSchema = {
+  // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+};
 
 export const env = createEnv({
   /**

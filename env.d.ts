@@ -1,15 +1,5 @@
 import { z } from "zod";
-
-export const ServerSchema = {
-  NODE_ENV: z.enum(["development", "test", "production"]),
-  PLAYLISTS_API_KEY: z.string(),
-  SPOTIFY_CLIENT_ID: z.string(),
-  SPOTIFY_CLIENT_SECRET: z.string(),
-};
-
-export const ClientSchema = {
-  // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
-};
+import { ServerSchema, ClientSchema } from "./src/env.mjs";
 
 const EnvSchema = z.object({ ...ServerSchema, ...ClientSchema });
 
