@@ -1,6 +1,6 @@
 import "~/styles/globals.css";
 import { ClientProvider } from "~/utils/trpcClient";
-import { NextAuthProvider } from "./providers";
+import { NextAuthProvider } from "./providers/session";
 
 export const metadata = {
   title: "Setlister",
