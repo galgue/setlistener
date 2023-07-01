@@ -1,14 +1,15 @@
 import { UserInfo } from "~/components/auth/UserInfo";
-import { getUserServerSession } from "~/lib/auth";
+import { getUserServerSession } from "~/utils/auth";
 import { SearchArtistSection } from "./SearchArtistSection";
+import { PageWithHeader } from "~/components/pageWithHeader";
 
 const Home = async () => {
   const session = await getUserServerSession();
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <div className="h-10 self-end">
-        <UserInfo session={session} />
+      <div className="h-10 w-full">
+        <PageWithHeader withoutBackButton={true} />
       </div>
       <div className="flex-1">
         <div className="flex pt-5">
