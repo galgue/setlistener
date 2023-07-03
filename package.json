@@ -17,6 +17,7 @@
     "@trpc/react-query": "^10.26.0",
     "@trpc/server": "^10.26.0",
     "cookies-next": "^2.1.2",
+    "image-to-base64": "^2.2.0",
     "jotai": "^2.2.1",
     "limiter": "^2.1.0",
     "next": "^13.4.2",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.4.2",
     "@types/eslint": "^8.37.0",
+    "@types/image-to-base64": "^2.1.0",
     "@types/node": "^18.16.0",
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.2.6",
