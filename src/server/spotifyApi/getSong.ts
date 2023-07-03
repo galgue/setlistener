@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { SpotifySongSchema } from "./schemas";
 import { getSpotifyToken } from "./createToken";
+import { spotifyFetcher } from "./spotifyFetcher";
 
 const GetSongResponseSchema = z.object({
   tracks: z.object({
@@ -16,16 +17,8 @@ export const getSong = async (songName: string, artists: string) => {
   const songNameEncoded = encodeURIComponent(`track:${songName}`);
   const artistNameEncoded = encodeURIComponent(`artist:${artists}`);
 
-  const response = await fetch(
-    `https://api.spotify.com/v1/search?q=${songNameEncoded}+${artistNameEncoded}&type=track&limit=1&offset=0&include_external=audio&limit=1&offset=0&market=US`,
-    {
-      next: {
-        revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 : 0,
-      },
-      headers: {
-        Authorization: `Bearer ${await getSpotifyToken()}`,
-      },
-    }
+  const response = await spotifyFetcher(
+    `https://api.spotify.com/v1/search?q=${songNameEncoded}+${artistNameEncoded}&type=track&limit=1&offset=0&include_external=audio&limit=1&offset=0&market=US`
   );
 
   if (response.status === 401) {
