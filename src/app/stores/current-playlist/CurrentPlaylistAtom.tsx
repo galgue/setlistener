@@ -6,7 +6,7 @@ import type { SpotifySong } from "~/server/spotifyApi/schemas";
 export const playlistAtom = atom<SpotifySong[]>([]);
 
 export const usePlaylist = () => {
-  const [playlist] = useAtomValue(playlistAtom);
+  const playlist = useAtomValue(playlistAtom);
 
   return {
     playlist,
