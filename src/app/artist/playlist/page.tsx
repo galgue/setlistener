@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { SpotifyPlaylist } from "./SpotifyPlaylist";
+import { CreatePlaylistButton } from "./CreatePlaylistButton";
 
 const ParamsSchema = z.object({
   artistId: z.string(),
@@ -19,13 +20,15 @@ const SearchSettingsPage = ({ searchParams }: { searchParams: unknown }) => {
   }
 
   return (
-    <div className="flex h-full flex-col text-white">
-      <div className="flex-10 h-[85%]">
+    <div className="flex h-full flex-col gap-4 text-white">
+      <div className="h-[80%] flex-[6]">
         <SpotifyPlaylist
           {...{ artistId, top, tour, minOccurrences, withCovers, artistName }}
         />
       </div>
-      <div className="flex h-[15%] flex-row items-center justify-center"></div>
+      <div className="flex-1">
+        <CreatePlaylistButton artistName={artistName} />
+      </div>
     </div>
   );
 };
