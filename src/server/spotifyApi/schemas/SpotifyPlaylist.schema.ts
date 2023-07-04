@@ -5,4 +5,9 @@ export const SpotifyPlaylistSchema = z.object({
   name: z.string(),
   description: z.string(),
   public: z.boolean(),
+  uri: z
+    .string()
+    .transform((uri) =>
+      uri.replace("spotify:playlist:", "https://open.spotify.com/playlist/")
+    ),
 });
