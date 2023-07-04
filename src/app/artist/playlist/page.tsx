@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { SpotifyPlaylist } from "./SpotifyPlaylist";
 import { CreatePlaylistButton } from "./CreatePlaylistButton";
+import { getUserServerSession } from "~/utils/auth";
 
 const ParamsSchema = z.object({
   artistId: z.string(),
@@ -11,9 +12,15 @@ const ParamsSchema = z.object({
   minOccurrences: z.number().optional(),
 });
 
-const SearchSettingsPage = ({ searchParams }: { searchParams: unknown }) => {
+const SearchSettingsPage = async ({
+  searchParams,
+}: {
+  searchParams: unknown;
+}) => {
   const { top, tour, minOccurrences, withCovers, artistName, artistId } =
     ParamsSchema.parse(searchParams);
+
+  const session = await getUserServerSession();
 
   if (!artistName) {
     return <></>;
@@ -27,7 +34,10 @@ const SearchSettingsPage = ({ searchParams }: { searchParams: unknown }) => {
         />
       </div>
       <div className="flex-1">
-        <CreatePlaylistButton artistName={artistName} />
+        <CreatePlaylistButton
+          artistName={artistName}
+          isUserConnected={!!session}
+        />
       </div>
     </div>
   );

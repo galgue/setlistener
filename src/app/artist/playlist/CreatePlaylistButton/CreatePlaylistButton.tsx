@@ -5,13 +5,16 @@ import { api } from "~/utils/api";
 import { SpotifyLogo } from "./SpotifyLogo";
 import { useRouter } from "next/navigation";
 import { HomeIcon } from "./HomeIcon";
+import { LoginButton } from "~/components/auth/Login";
 
 type CreatePlaylistButtonProps = {
   artistName: string;
+  isUserConnected?: boolean;
 };
 
 export const CreatePlaylistButton = ({
   artistName,
+  isUserConnected = false,
 }: CreatePlaylistButtonProps) => {
   const { mutate, isSuccess, isLoading, data } =
     api.spotify.createPlaylist.useMutation({
@@ -21,6 +24,20 @@ export const CreatePlaylistButton = ({
     });
   const { playlist } = usePlaylist();
   const router = useRouter();
+
+  if (!isUserConnected) {
+    return (
+      <LoginButton className="h-full w-full rounded-lg border-0 bg-spotify-header text-3xl text-white hover:bg-spotify-row focus:outline-none disabled:opacity-50">
+        <div className="flex flex-row items-center justify-center gap-3">
+          <div>Connect to</div>
+          <div className="h-3/6 w-1/2">
+            <SpotifyLogo />
+          </div>
+        </div>
+      </LoginButton>
+    );
+  }
+
   return (
     <div
       className={`grid h-full w-[200%] ${
