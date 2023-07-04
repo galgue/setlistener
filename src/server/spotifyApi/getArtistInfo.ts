@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { SpotifyArtistSchema } from "./schemas";
-import { getSpotifyToken } from "./createToken";
 import { spotifyFetcher } from "./spotifyFetcher";
 
 const GetArtistInfoResponseSchema = z.object({
