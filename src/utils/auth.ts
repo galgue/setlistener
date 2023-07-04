@@ -7,6 +7,7 @@ const scope = [
   "user-read-email",
   "playlist-modify-private",
   "playlist-modify-public",
+  "ugc-image-upload",
 ].join(" ");
 
 const spotifyProvider = SpotifyProvider({
@@ -86,7 +87,7 @@ export const authOptions: AuthOptions = {
         } as JWT;
       }
       // Return previous token if the access token has not expired yet
-      if (Date.now() < token.accessTokenExpires) {
+      if (token.accessTokenExpires < Date.now()) {
         return token;
       }
 
@@ -95,6 +96,7 @@ export const authOptions: AuthOptions = {
     },
     session({ session, token }) {
       session.user = token.user;
+      session.user.accessToken = token.accessToken;
       return session;
     },
   },
