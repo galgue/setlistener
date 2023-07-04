@@ -1,8 +1,14 @@
-import { getArtistInfo, getSong } from "~/server/spotifyApi";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import imageToBase64 from "image-to-base64";
 import { z } from "zod";
-import type { SpotifySong } from "~/server/spotifyApi/schemas";
-import { getUserProfile } from "~/server/spotifyApi/getUserProfile";
+import {
+  getArtistInfo,
+  getSong,
+  createPlaylist,
+  addPlaylistCoverImage,
+  addSongsToPlaylist,
+} from "~/server/spotifyApi";
+import { type SpotifySong } from "~/server/spotifyApi/schemas";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const spotifyRouter = createTRPCRouter({
   getArtistInfo: publicProcedure
@@ -69,14 +75,27 @@ export const spotifyRouter = createTRPCRouter({
         bannerImage: smallestImage,
       } as SpotifySong;
     }),
-  getUserProfile: publicProcedure
+  createPlaylist: publicProcedure
     .input(
       z.object({
-        accessToken: z.string(),
-        tokenType: z.string(),
+        songUris: z.array(z.string()),
+        artistName: z.string(),
       })
     )
-    .query(async ({ input }) => {
-      return getUserProfile(input.tokenType, input.accessToken);
+    .mutation(async ({ input }) => {
+      const { songUris, artistName } = input;
+
+      const playlist = await createPlaylist(artistName);
+
+      const artistResponse = await getArtistInfo(artistName);
+      const artist = artistResponse.artists.items[0];
+      const image = artist?.images?.at(-1)?.url;
+      if (image) {
+        const imageBase64 = await imageToBase64(image);
+        await addPlaylistCoverImage(playlist.id, imageBase64);
+      }
+      await addSongsToPlaylist(playlist.id, songUris);
+
+      return playlist;
     }),
 });
