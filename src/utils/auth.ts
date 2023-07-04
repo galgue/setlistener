@@ -87,7 +87,7 @@ export const authOptions: AuthOptions = {
         } as JWT;
       }
       // Return previous token if the access token has not expired yet
-      if (token.accessTokenExpires < Date.now()) {
+      if (token.accessTokenExpires > Date.now()) {
         return token;
       }
 
