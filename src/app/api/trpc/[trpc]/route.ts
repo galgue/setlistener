@@ -11,7 +11,7 @@ const handler = (request: Request) => {
     req: request,
     router: appRouter,
     createContext: function (
-      opts: FetchCreateContextFnOptions
+      _opts: FetchCreateContextFnOptions
     ): object | Promise<object> {
       return {};
     },
