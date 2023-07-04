@@ -101,7 +101,6 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
           >
             <span>edit options</span>
             <svg
-              data-accordion-icon
               className={`h-6 w-6 shrink-0 ${isEditing ? "rotate-180" : ""}`}
               fill="currentColor"
               viewBox="0 0 20 20"
