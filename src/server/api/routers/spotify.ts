@@ -51,7 +51,8 @@ export const spotifyRouter = createTRPCRouter({
       });
 
       if (!song && coverArtist) {
-        song = response.tracks.items.find((song) => {
+        const coverSongResponse = await getSong(songName, coverArtist);
+        song = coverSongResponse.tracks.items.find((song) => {
           if (
             song.artists[0]?.name.toLowerCase() === coverArtist.toLowerCase()
           ) {

@@ -13,7 +13,7 @@ type OptionsProps = {
 export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
   const [tour, setTour] = useState<string>("");
   const [numberOfShows, setNumberOfShows] = useState<number>(5);
-  const [maxOccurrences, setMaxOccurrences] = useState<number>(2);
+  const [minOccurrences, setMinOccurrences] = useState<number>(2);
   const [withCovers, setWithCovers] = useState<boolean>(true);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -50,7 +50,7 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
             <div className="w-1/2 p-3 pl-0">
               <NumberInput
                 label="Number of shows"
-                min={maxOccurrences}
+                min={minOccurrences}
                 max={10}
                 value={numberOfShows}
                 onChange={(value) => {
@@ -60,12 +60,12 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
             </div>
             <div className="w-1/2 p-3 pl-0">
               <NumberInput
-                label="Max occurrences"
+                label="Min occurrences"
                 min={1}
                 max={numberOfShows}
-                value={maxOccurrences}
+                value={minOccurrences}
                 onChange={(value) => {
-                  setMaxOccurrences(value);
+                  setMinOccurrences(value);
                 }}
               />
             </div>
@@ -124,7 +124,7 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
               artistId,
               artistName,
               ...(isEditing
-                ? { numberOfShows, maxOccurrences, withCovers, tour }
+                ? { numberOfShows, minOccurrences, withCovers, tour }
                 : {}),
             },
           }}

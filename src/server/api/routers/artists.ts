@@ -57,30 +57,30 @@ export const artistsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const { artistId, top, withCovers, minOccurrences, tour } = input;
 
-      const lastResult = await getArtistSetlistsIds(artistId, 1, tour);
+      const playlistIds: string[] = [];
 
-      const playlistsWithIds = [...lastResult];
+      const now = Date.now();
 
-      let page = 2;
-
-      while (lastResult.length !== 0 && playlistsWithIds.length < top) {
+      for (let page = 1; playlistIds.length < top; page++) {
         const newPlaylists = await getArtistSetlistsIds(artistId, page, tour);
-        playlistsWithIds.push(...newPlaylists);
-        page++;
+
+        if (newPlaylists.length === 0) break;
+
+        const pastPlaylistsIds = newPlaylists
+          .filter((playlist) => {
+            return playlist.eventDate.getTime() < now;
+          })
+          .map((playlist) => playlist.id);
+
+        playlistIds.push(...pastPlaylistsIds);
       }
 
-      const pastPlaylists = playlistsWithIds.filter(
-        (playlist) => playlist.eventDate < new Date()
-      );
-
-      const playlistIds = pastPlaylists
-        .map((playlist) => playlist.id)
-        .slice(0, top);
+      const topPlaylistsIds = playlistIds.slice(0, top);
 
       const playlists: Awaited<ReturnType<typeof getSetlist>>[] = [];
 
       // request can't be parallelized because of rate limiting
-      for (const playlistId of playlistIds) {
+      for (const playlistId of topPlaylistsIds) {
         const playlist = await getSetlist(playlistId);
         playlists.push(playlist);
       }
@@ -117,14 +117,15 @@ export const artistsRouter = createTRPCRouter({
         .filter(([_, options]) => {
           return (
             options.occurrences >=
-            (top > playlistIds.length
-              ? Math.max(0, playlistIds.length - 2)
-              : minOccurrences || top - 2)
+            (top > topPlaylistsIds.length
+              ? Math.max(0, topPlaylistsIds.length - (top - minOccurrences))
+              : minOccurrences)
           );
         })
         .map(([song, options]) => ({
           name: song,
           cover: options.coverOf,
+          occurrences: options.occurrences,
         }));
 
       return relevantSongs;

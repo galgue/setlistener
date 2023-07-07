@@ -6,10 +6,10 @@ import { getUserServerSession } from "~/utils/auth";
 const ParamsSchema = z.object({
   artistId: z.string(),
   artistName: z.string(),
-  top: z.number().optional(),
+  numberOfShows: z.coerce.number().optional(),
   tour: z.string().optional(),
   withCovers: z.string().optional(),
-  minOccurrences: z.number().optional(),
+  minOccurrences: z.coerce.number().optional(),
 });
 
 const SearchSettingsPage = async ({
@@ -17,8 +17,14 @@ const SearchSettingsPage = async ({
 }: {
   searchParams: unknown;
 }) => {
-  const { top, tour, minOccurrences, withCovers, artistName, artistId } =
-    ParamsSchema.parse(searchParams);
+  const {
+    numberOfShows,
+    tour,
+    minOccurrences,
+    withCovers,
+    artistName,
+    artistId,
+  } = ParamsSchema.parse(searchParams);
 
   const session = await getUserServerSession();
 
@@ -30,7 +36,14 @@ const SearchSettingsPage = async ({
     <div className="flex h-full flex-col gap-4 text-white">
       <div className="h-[80%] flex-[6]">
         <SpotifyPlaylist
-          {...{ artistId, top, tour, minOccurrences, withCovers, artistName }}
+          {...{
+            artistId,
+            top: numberOfShows,
+            tour,
+            minOccurrences,
+            withCovers,
+            artistName,
+          }}
         />
       </div>
       <div className="flex-1">
