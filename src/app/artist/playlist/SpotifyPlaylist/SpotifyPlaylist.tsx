@@ -8,6 +8,7 @@ type SpotifyPlaylistProps = {
   withCovers?: string;
   minOccurrences?: number;
   artistName: string;
+  defaultSearch?: boolean;
 };
 
 export const SpotifyPlaylist = ({
@@ -17,6 +18,7 @@ export const SpotifyPlaylist = ({
   minOccurrences,
   withCovers,
   artistName,
+  defaultSearch = false,
 }: SpotifyPlaylistProps) => (
   <div className="flex h-full flex-col gap-1 bg-spotify-background">
     <div className="flex">
@@ -30,6 +32,7 @@ export const SpotifyPlaylist = ({
         top={top}
         tour={tour}
         withCovers={withCovers}
+        defaultSearch={defaultSearch}
       />
     </div>
   </div>

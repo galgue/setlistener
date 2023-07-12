@@ -124,7 +124,13 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
               artistId,
               artistName,
               ...(isEditing
-                ? { numberOfShows, minOccurrences, withCovers, tour }
+                ? {
+                    numberOfShows,
+                    minOccurrences,
+                    withCovers,
+                    tour,
+                    defaultSearch: false,
+                  }
                 : {}),
             },
           }}
