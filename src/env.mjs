@@ -10,6 +10,9 @@ export const ServerSchema = {
   SPOTIFY_CLIENT_SECRET: z.string(),
   AUTH_SECRET: z.string(),
   NEXTAUTH_URL: z.string().optional(),
+  REDIS_HOST: z.string(),
+  REDIS_PASSWORD: z.string(),
+  REDIS_PORT: z.coerce.number(),
 };
 
 /** @typedef {typeof ClientSchema} ClientSchema */
@@ -42,6 +45,9 @@ export const env = createEnv({
     SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
     AUTH_SECRET: process.env.AUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    REDIS_HOST: process.env.REDIS_HOST,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+    REDIS_PORT: process.env.REDIS_PORT,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
