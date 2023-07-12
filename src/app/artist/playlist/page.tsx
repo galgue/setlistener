@@ -10,6 +10,7 @@ const ParamsSchema = z.object({
   tour: z.string().optional(),
   withCovers: z.string().optional(),
   minOccurrences: z.coerce.number().optional(),
+  defaultSearch: z.coerce.boolean().default(true),
 });
 
 const SearchSettingsPage = async ({
@@ -24,6 +25,7 @@ const SearchSettingsPage = async ({
     withCovers,
     artistName,
     artistId,
+    defaultSearch,
   } = ParamsSchema.parse(searchParams);
 
   const session = await getUserServerSession();
@@ -43,6 +45,7 @@ const SearchSettingsPage = async ({
             minOccurrences,
             withCovers,
             artistName,
+            defaultSearch,
           }}
         />
       </div>

@@ -10,6 +10,7 @@ type SongsListProps = {
   withCovers?: string;
   minOccurrences?: number;
   artistName: string;
+  defaultSearch?: boolean;
 };
 
 export const SongsList = async ({
@@ -19,6 +20,7 @@ export const SongsList = async ({
   minOccurrences,
   withCovers,
   artistName,
+  defaultSearch = false,
 }: SongsListProps) => {
   const songs = await apiCaller.artist.songsOfLastShows({
     artistId,
@@ -26,6 +28,7 @@ export const SongsList = async ({
     tour,
     minOccurrences,
     withCovers,
+    defaultSearch,
   });
 
   const SongsInfo = (
