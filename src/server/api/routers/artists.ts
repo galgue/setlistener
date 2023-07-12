@@ -5,6 +5,17 @@ import {
   searchBands,
   getArtistSetlistsIds,
 } from "../../setlistApi";
+import { redis } from "~/redis";
+
+const RelevantSongResultSchema = z.array(
+  z.object({
+    name: z.string(),
+    occurrences: z.number(),
+    cover: z.string().optional(),
+  })
+);
+
+const ToursSchema = z.array(z.string());
 
 export const artistsRouter = createTRPCRouter({
   search: publicProcedure
@@ -24,6 +35,15 @@ export const artistsRouter = createTRPCRouter({
   tours: publicProcedure
     .input(z.object({ artistId: z.string() }))
     .query(async ({ input }) => {
+      const cachedResult = await redis.zodGet(
+        `tours:${input.artistId}`,
+        ToursSchema
+      );
+
+      if (cachedResult) {
+        return cachedResult;
+      }
+
       const playlists = (
         await Promise.all([
           getArtistSetlistsIds(input.artistId, 1),
@@ -32,12 +52,30 @@ export const artistsRouter = createTRPCRouter({
         ])
       ).flat();
 
+      const now = Date.now();
+      let timeToNextShow = 0;
+
+      playlists.every((playlist) => {
+        const date = new Date(playlist.eventDate);
+        const diff = date.getTime() - now;
+        if (diff < 0) return false;
+        timeToNextShow = diff;
+        return true;
+      });
+
       const tours = playlists
         .filter((playlist) => Boolean(playlist.tour?.name))
         .reduce((acc, playlist) => {
           acc.add(playlist.tour?.name as string);
           return acc;
         }, new Set<string>());
+
+      await redis.zodSet(
+        `tours:${input.artistId}`,
+        ToursSchema,
+        Array.from(tours),
+        timeToNextShow ? timeToNextShow / 1000 : 60 * 60 * 24
+      );
 
       return Array.from(tours);
     }),
@@ -52,14 +90,27 @@ export const artistsRouter = createTRPCRouter({
           .string()
           .transform((value) => value === "true")
           .default("true"),
+        defaultSearch: z.boolean().default(false),
       })
     )
     .query(async ({ input }) => {
-      const { artistId, top, withCovers, minOccurrences, tour } = input;
+      const { artistId, top, withCovers, minOccurrences, tour, defaultSearch } =
+        input;
+      if (defaultSearch) {
+        const cachedResult = await redis.zodGet(
+          `playlist:${artistId}`,
+          RelevantSongResultSchema
+        );
+        if (cachedResult) {
+          return cachedResult;
+        }
+      }
 
       const playlistIds: string[] = [];
 
       const now = Date.now();
+
+      let timeToNextShow = 0;
 
       for (let page = 1; playlistIds.length < top; page++) {
         const newPlaylists = await getArtistSetlistsIds(artistId, page, tour);
@@ -68,7 +119,11 @@ export const artistsRouter = createTRPCRouter({
 
         const pastPlaylistsIds = newPlaylists
           .filter((playlist) => {
-            return playlist.eventDate.getTime() < now;
+            if (playlist.eventDate.getTime() > now) {
+              timeToNextShow = playlist.eventDate.getTime() - now;
+              return false;
+            }
+            return true;
           })
           .map((playlist) => playlist.id);
 
@@ -113,20 +168,30 @@ export const artistsRouter = createTRPCRouter({
         >()
       );
 
-      const relevantSongs = Object.values(Array.from(songsOccurrences))
-        .filter(([_, options]) => {
-          return (
-            options.occurrences >=
-            (top > topPlaylistsIds.length
-              ? Math.max(0, topPlaylistsIds.length - (top - minOccurrences))
-              : minOccurrences)
-          );
-        })
-        .map(([song, options]) => ({
-          name: song,
-          cover: options.coverOf,
-          occurrences: options.occurrences,
-        }));
+      const relevantSongs: z.infer<typeof RelevantSongResultSchema> =
+        Object.values(Array.from(songsOccurrences))
+          .filter(([_, options]) => {
+            return (
+              options.occurrences >=
+              (top > topPlaylistsIds.length
+                ? Math.max(0, topPlaylistsIds.length - (top - minOccurrences))
+                : minOccurrences)
+            );
+          })
+          .map(([song, options]) => ({
+            name: song,
+            cover: options.coverOf,
+            occurrences: options.occurrences,
+          }));
+
+      if (defaultSearch) {
+        await redis.zodSet(
+          `playlist:${artistId}`,
+          RelevantSongResultSchema,
+          relevantSongs,
+          timeToNextShow ? timeToNextShow / 1000 : 60 * 60 * 24
+        );
+      }
 
       return relevantSongs;
     }),
