@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { ArtistSchema } from "./Setlist.schemas";
 import { setlistFetcher } from "./setlistFetcher";
+import { SetlistArtistSchema } from "./schemas";
 
 const SearchBandsResponseSchema = z.object({
-  artist: z.array(ArtistSchema),
+  artist: z.array(SetlistArtistSchema),
   total: z.number(),
   page: z.number(),
   itemsPerPage: z.number(),

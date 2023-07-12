@@ -1,4 +1,4 @@
-import { SetlistSchema } from "./Setlist.schemas";
+import { SetlistSchema } from "./schemas";
 import { setlistFetcher } from "./setlistFetcher";
 
 export const getSetlist = async (id: string) => {

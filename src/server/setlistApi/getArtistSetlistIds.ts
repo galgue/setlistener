@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SetlistSchema } from "./Setlist.schemas";
+import { SetlistSchema } from "./schemas";
 import { setlistFetcher } from "./setlistFetcher";
 
 const GetArtistSetlistResultSchema = z.object({
