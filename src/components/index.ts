@@ -1,4 +1,4 @@
-export { Button } from "./Button";
-export { NumberInput } from "./NumberInput";
-export { Input } from "./Input";
-export { Checkbox } from "./Checkbox";
+export { Button } from "./button";
+export { NumberInput } from "./number-input";
+export { Input } from "./input";
+export { Checkbox } from "./checkbox";

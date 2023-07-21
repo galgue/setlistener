@@ -15,7 +15,7 @@ export const Button = (buttonProps: ButtonProps) => (
   <button
     {...buttonProps}
     className={twMerge(
-      "rounded-lg border-0 text-white focus:outline-none disabled:opacity-50",
+      "h-10 w-20 rounded-lg border-0 text-white focus:outline-none disabled:opacity-50",
       variants[buttonProps.variant ?? "primary"],
       buttonProps.className
     )}
