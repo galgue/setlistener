@@ -1,6 +1,6 @@
 "use client";
 
-import { usePlaylist } from "~/app/stores";
+import { usePlaylist } from "~/stores";
 import { api } from "~/utils/api";
 import { SpotifyLogo } from "./SpotifyLogo";
 import { useRouter } from "next/navigation";

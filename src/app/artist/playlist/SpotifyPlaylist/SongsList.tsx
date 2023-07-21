@@ -1,7 +1,7 @@
 import { apiCaller } from "~/server/api/root";
 import { SongInfo } from "./SongInfo";
 import type { SpotifySong } from "~/server/spotifyApi/schemas";
-import { PlaylistDataAtom } from "~/app/stores/current-playlist";
+import { PlaylistDataAtom } from "~/stores";
 
 type SongsListProps = {
   artistId: string;
