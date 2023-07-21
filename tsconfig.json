@@ -29,7 +29,7 @@
   "include": [
     ".eslintrc.cjs",
     "next-env.d.ts",
-    "type-overrides/env.d.ts",
+    "types/env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
