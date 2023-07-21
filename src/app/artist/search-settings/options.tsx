@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { NumberInput } from "~/components";
+import { Checkbox, Input, NumberInput } from "~/components";
 
 type OptionsProps = {
   artistId: string;
@@ -71,14 +71,13 @@ export const Options = ({ artistId, tours, artistName }: OptionsProps) => {
             </div>
           </div>
           <div className="mb-4 mt-3 flex w-full items-center justify-center">
-            <input
+            <Checkbox
               id="default-checkbox"
-              type="checkbox"
               checked={withCovers}
               onChange={(e) => {
                 setWithCovers(e.currentTarget.checked);
               }}
-              className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-950 accent-spotify-green "
+              className="h-4 w-4 "
             />
             <label
               about="default-checkbox"
