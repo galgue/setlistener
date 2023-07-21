@@ -1,0 +1,1 @@
+export { PageWithHeader } from "./pageWithHeader";
