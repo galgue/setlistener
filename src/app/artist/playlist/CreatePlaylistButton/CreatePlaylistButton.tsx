@@ -5,7 +5,8 @@ import { api } from "~/utils/api";
 import { SpotifyLogo } from "./SpotifyLogo";
 import { useRouter } from "next/navigation";
 import { HomeIcon } from "./HomeIcon";
-import { LoginButton } from "~/components/auth/Login";
+import { LoginButton } from "~/layouts/page-with-header/auth/Login";
+import { Button } from "~/components";
 
 type CreatePlaylistButtonProps = {
   artistName: string;
@@ -47,8 +48,9 @@ export const CreatePlaylistButton = ({
       ${isLoading ? "animate-pulse" : ""} grid-cols-2 transition-transform
       duration-300 ease-in-out`}
       >
-        <button
-          className="h-full w-full rounded-lg border-0 bg-spotify-header text-3xl text-white hover:bg-spotify-row focus:outline-none disabled:opacity-50"
+        <Button
+          className="h-full w-full text-3xl"
+          variant="secondary"
           disabled={isSuccess || isLoading}
           onClick={() => {
             void mutate({
@@ -63,10 +65,10 @@ export const CreatePlaylistButton = ({
               <SpotifyLogo />
             </div>
           </div>
-        </button>
+        </Button>
         <div className="grid grid-cols-[4fr,1fr] gap-4">
-          <button
-            className="h-full w-full rounded-lg border-0 bg-spotify-header text-3xl text-white hover:bg-spotify-row focus:outline-none disabled:opacity-50"
+          <Button
+            className="h-full w-full text-3xl"
             onClick={() => {
               if (data?.uri) {
                 router.push(data?.uri);
@@ -74,9 +76,9 @@ export const CreatePlaylistButton = ({
             }}
           >
             Go to playlist
-          </button>
-          <button
-            className="h-full w-full rounded-lg border-0 bg-spotify-green text-3xl text-white hover:bg-green-600 focus:outline-none disabled:opacity-50"
+          </Button>
+          <Button
+            className="h-full w-full text-3xl "
             onClick={() => {
               router.push("/");
             }}
@@ -84,7 +86,7 @@ export const CreatePlaylistButton = ({
             <div className="p-2">
               <HomeIcon />
             </div>
-          </button>
+          </Button>
         </div>
       </div>
     </div>

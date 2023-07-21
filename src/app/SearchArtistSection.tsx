@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "~/components";
 
 export const SearchArtistSection = () => {
   const [search, setSearch] = useState("");
@@ -26,15 +27,15 @@ export const SearchArtistSection = () => {
           }}
         />
       </div>
-      <button
-        className="mb-20 rounded-lg border-0 bg-spotify-green px-8 py-2 text-5xl text-white hover:bg-green-600 focus:outline-none disabled:opacity-50"
+      <Button
+        className="mb-20 px-8 py-2 text-5xl"
         disabled={search.length === 0}
         onClick={() => {
           void router.push(`/artist/name/${encodeURIComponent(search)}`);
         }}
       >
         Search
-      </button>
+      </Button>
     </>
   );
 };

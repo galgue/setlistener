@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { NumberInput } from "./NumberInput";
+import { NumberInput } from "~/components";
 
 type OptionsProps = {
   artistId: string;
