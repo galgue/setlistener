@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "~/components";
 
 export const PreviousPageButton = (
   buttonProps: Omit<
@@ -17,5 +18,12 @@ export const PreviousPageButton = (
     router.back();
   };
 
-  return <button type="button" {...buttonProps} onClick={onClick} />;
+  return (
+    <Button
+      type="button"
+      {...buttonProps}
+      onClick={onClick}
+      variant="secondary"
+    />
+  );
 };

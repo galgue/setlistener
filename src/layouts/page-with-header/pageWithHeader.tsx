@@ -18,7 +18,7 @@ export const PageWithHeader = async ({
         {!withoutBackButton && (
           <PreviousPageButton
             type="button"
-            className="my-auto mr-auto h-10 w-10 rounded-lg bg-spotify-header py-1 text-center text-2xl font-bold text-white hover:bg-green-800"
+            className="my-auto mr-auto h-10 w-10 py-1 text-center text-2xl font-bold text-white"
           >
             <BackIcon />
           </PreviousPageButton>

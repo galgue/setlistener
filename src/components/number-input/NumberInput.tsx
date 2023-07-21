@@ -26,9 +26,9 @@ export const NumberInput = ({
           onClick={() => {
             onChange(value - 1);
           }}
-          className="h-full w-10 cursor-pointer rounded-l bg-gray-50 text-gray-600 outline-none hover:bg-gray-400 hover:text-gray-700"
+          className="h-full w-10 cursor-pointer rounded-l bg-spotify-green text-white outline-none transition-colors hover:bg-spotify-header"
         >
-          <span className="m-auto text-2xl font-thin">−</span>
+          <span className="m-auto text-2xl font-semibold">−</span>
         </button>
         <div className="text-md flex flex-1 items-center justify-center bg-gray-50 text-center font-semibold  text-gray-700 outline-none hover:text-black  focus:text-black focus:outline-none">
           <div>{value}</div>
@@ -39,9 +39,9 @@ export const NumberInput = ({
             onChange(value + 1);
           }}
           disabled={max !== undefined && value >= max}
-          className="h-full w-10 cursor-pointer rounded-r bg-gray-50 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+          className="h-full w-10 cursor-pointer rounded-r bg-spotify-green text-white transition-colors hover:bg-spotify-header "
         >
-          <span className="m-auto text-2xl font-thin">+</span>
+          <span className="m-auto text-center text-2xl font-semibold">+</span>
         </button>
       </div>
     </div>

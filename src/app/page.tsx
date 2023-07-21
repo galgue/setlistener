@@ -1,4 +1,4 @@
-import { PageWithHeader } from "~/components/pageWithHeader";
+import { PageWithHeader } from "~/layouts";
 import { SearchArtistSection } from "./SearchArtistSection";
 
 const Home = () => {
