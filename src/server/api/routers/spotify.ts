@@ -9,6 +9,7 @@ import {
 } from "~/server/spotifyApi";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { songStore } from "~/redis/stores/song.redis";
+import { artistStore } from "~/redis/stores/artist.store";
 
 export const spotifyRouter = createTRPCRouter({
   getArtistInfo: publicProcedure
@@ -18,8 +19,16 @@ export const spotifyRouter = createTRPCRouter({
       })
     )
     .query(async ({ input }) => {
+      const cachedArtist = await artistStore.get(input.artistName);
+      if (cachedArtist) {
+        return cachedArtist;
+      }
       const response = await getArtistInfo(input.artistName);
       const artist = response.artists.items[0];
+
+      if (artist) {
+        await artistStore.set(input.artistName, artist);
+      }
 
       return artist;
     }),
@@ -79,9 +88,11 @@ export const spotifyRouter = createTRPCRouter({
 
       const playlist = await createPlaylist(artistName);
 
-      const artistResponse = await getArtistInfo(artistName);
-      const artist = artistResponse.artists.items[0];
-      const image = artist?.images?.at(-1)?.url;
+      const cachedArtist = await artistStore.get(artistName);
+
+      const artist =
+        cachedArtist ?? (await getArtistInfo(artistName)).artists.items[0];
+      const image = artist?.bannerImage?.url;
       if (image) {
         const imageBase64 = await imageToBase64(image);
         await addPlaylistCoverImage(playlist.id, imageBase64);
