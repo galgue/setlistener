@@ -7,7 +7,9 @@ const ParamsSchema = z.object({
 });
 
 const Search = async ({ params }: { params: unknown }) => {
-  const { name } = ParamsSchema.parse(params);
+  const { name: undecodedName } = ParamsSchema.parse(params);
+
+  const name = decodeURIComponent(undecodedName);
 
   const artistsInfo = await apiCaller.artist.search({ text: name });
 
@@ -30,7 +32,7 @@ const Search = async ({ params }: { params: unknown }) => {
 
   if (artistsData.length === 0) {
     return (
-      <div className="flex h-full">
+      <div className="flex h-full w-full items-center justify-center">
         <h1 className="self-center text-center text-2xl text-white">
           No results found for {name}
         </h1>
