@@ -1,22 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
-import { apiCaller } from "~/server/api/root";
+import { SpotifySong } from "~/server/spotifyApi/schemas";
 
 type ArtistItemProps = {
   artistName: string;
   artistId: string;
   description?: string;
+  bannerImage?: {
+    url: string;
+    width: number;
+    height: number;
+  };
 };
 
 export const ArtistInfo = async ({
   artistId,
   artistName,
   description,
+  bannerImage,
 }: ArtistItemProps) => {
-  const artist = await apiCaller.spotify.getArtistInfo({
-    artistName,
-  });
-
+  console.log(artistId, artistName, description);
   return (
     <Link
       href={{
@@ -32,12 +35,12 @@ export const ArtistInfo = async ({
           <h1 className=" font-semibold">{artistName}</h1>
           <p className="text-sm">{description}</p>
         </div>
-        {artist?.bannerImage && (
+        {bannerImage && (
           <div className="aspect-square h-4/5 overflow-hidden rounded-full">
             <Image
-              src={artist?.bannerImage.url}
-              width={artist?.bannerImage.width}
-              height={artist?.bannerImage.height}
+              src={bannerImage.url}
+              width={bannerImage.width}
+              height={bannerImage.height}
               alt={`${artistName} banner`}
             />
           </div>

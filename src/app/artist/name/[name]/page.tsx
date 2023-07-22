@@ -9,9 +9,26 @@ const ParamsSchema = z.object({
 const Search = async ({ params }: { params: unknown }) => {
   const { name } = ParamsSchema.parse(params);
 
-  const data = await apiCaller.artist.search({ text: name });
+  const artistsInfo = await apiCaller.artist.search({ text: name });
 
-  if (data.length === 0) {
+  const artistsData = (
+    await Promise.all(
+      artistsInfo.map(async (artist) => {
+        const artistSpotifyData = await apiCaller.spotify.getArtistInfo({
+          artistName: artist.name,
+        });
+        if (!artistSpotifyData) {
+          return null;
+        }
+        return {
+          bannerImage: artistSpotifyData.bannerImage,
+          ...artist,
+        };
+      })
+    )
+  ).filter(Boolean);
+
+  if (artistsData.length === 0) {
     return (
       <div className="flex h-full">
         <h1 className="self-center text-center text-2xl text-white">
@@ -23,12 +40,13 @@ const Search = async ({ params }: { params: unknown }) => {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      {data.map((artist) => (
+      {artistsData.map(({ mbid, name, disambiguation, bannerImage }) => (
         <ArtistInfo
-          key={artist.mbid}
-          artistId={artist.mbid}
-          artistName={artist.name}
-          description={artist.disambiguation}
+          key={mbid}
+          artistId={mbid}
+          artistName={name}
+          description={disambiguation}
+          bannerImage={bannerImage}
         />
       ))}
     </div>
