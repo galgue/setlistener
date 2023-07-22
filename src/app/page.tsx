@@ -1,5 +1,5 @@
 import { PageWithHeader } from "~/layouts";
-import { SearchArtistSection } from "./SearchArtistSection";
+import { SearchArtist } from "./SearchArtistSection";
 
 const Home = () => {
   return (
@@ -18,7 +18,7 @@ const Home = () => {
           </h1>
         </div>
       </div>
-      <SearchArtistSection />
+      <SearchArtist />
     </div>
   );
 };

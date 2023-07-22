@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button, Input } from "~/components";
 
-export const SearchArtistSection = () => {
+export const SearchArtist = () => {
   const [search, setSearch] = useState("");
   const router = useRouter();
   return (
