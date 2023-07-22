@@ -7,8 +7,8 @@ import {
   addPlaylistCoverImage,
   addSongsToPlaylist,
 } from "~/server/spotifyApi";
-import { type SpotifySong } from "~/server/spotifyApi/schemas";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import { songStore } from "~/redis/stores/song.redis";
 
 export const spotifyRouter = createTRPCRouter({
   getArtistInfo: publicProcedure
@@ -21,16 +21,7 @@ export const spotifyRouter = createTRPCRouter({
       const response = await getArtistInfo(input.artistName);
       const artist = response.artists.items[0];
 
-      const smallestImage = artist?.images?.reduce((acc, image) => {
-        if (!acc) return image;
-        if (image.width < acc.width) return image;
-        return acc;
-      }, artist.images[0]);
-
-      return {
-        ...artist,
-        bannerImage: smallestImage,
-      };
+      return artist;
     }),
   getSong: publicProcedure
     .input(
@@ -42,6 +33,13 @@ export const spotifyRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const { songName, artist, coverArtist } = input;
+
+      const cachedSong = await songStore.get([songName, artist]);
+
+      if (cachedSong) {
+        return cachedSong;
+      }
+
       const response = await getSong(songName, artist);
 
       let song = response.tracks.items.find((song) => {
@@ -65,16 +63,9 @@ export const spotifyRouter = createTRPCRouter({
         return undefined;
       }
 
-      const smallestImage = song?.album?.images?.reduce((acc, image) => {
-        if (!acc) return image;
-        if (image.width < acc.width) return image;
-        return acc;
-      }, song.album.images[0]);
+      await songStore.set([songName, artist], song);
 
-      return {
-        ...song,
-        bannerImage: smallestImage,
-      } as SpotifySong;
+      return song;
     }),
   createPlaylist: publicProcedure
     .input(

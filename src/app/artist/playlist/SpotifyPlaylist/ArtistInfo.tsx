@@ -10,24 +10,14 @@ export const ArtistInfo = async ({ artistName }: ArtistInfoProps) => {
     artistName,
   });
 
-  const smallImage = artist?.images?.reduce((prev, curr) => {
-    if (prev === undefined) {
-      return curr;
-    }
-    if (prev.height < curr.height) {
-      return prev;
-    }
-    return curr;
-  }, artist?.images[0]);
-
   return (
     <div className="flex h-16 w-full flex-row items-center gap-2 rounded-lg bg-spotify-header pl-2">
-      {smallImage && (
+      {artist?.bannerImage && (
         <div className="aspect-square h-4/5 overflow-hidden rounded-full">
           <Image
-            width={smallImage.width}
-            height={smallImage.height}
-            src={smallImage.url}
+            width={artist?.bannerImage.width}
+            height={artist?.bannerImage.height}
+            src={artist?.bannerImage.url}
             alt={artist?.name || ""}
           />
         </div>
