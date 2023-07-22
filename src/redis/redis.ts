@@ -1,6 +1,6 @@
 import { Redis, type RedisOptions } from "ioredis";
 
-export function createRedisInstance() {
+function createRedisInstance() {
   try {
     const options: RedisOptions = {
       host: process.env.REDIS_HOST,
@@ -30,3 +30,5 @@ export function createRedisInstance() {
     throw new Error(`[Redis] Could not create a Redis instance`);
   }
 }
+
+export const redisInstance = createRedisInstance();
